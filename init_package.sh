@@ -110,7 +110,7 @@ sed -i "s/author = \"Wei Jinqi\"/author = \"$AUTHOR_NAME\"/" docs/source/conf.py
 sed -i "s/\"..\/..\/src\/python_package_template\"/\"..\/..\/src\/$PACKAGE_NAME_UNDERSCORE\"/" docs/source/conf.py
 sed -i "s/python_package_template/$PACKAGE_NAME_UNDERSCORE/" docs/source/installation.md
 
-cd ..
+
 # Get the current directory name
 CURRENT_DIR=$(basename "$PWD")
 CURRENT_DIR="${CURRENT_DIR%/}"
