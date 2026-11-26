@@ -13,7 +13,6 @@
 				"ms-azuretools.vscode-docker",
 				"ms-python.python",
 				"ms-python.vscode-pylance",
-				"ms-python.black-formatter",
 				"charliermarsh.ruff",
 				"ms-vsliveshare.vsliveshare",
 				"ryanluker.vscode-coverage-gutters",
@@ -25,19 +24,18 @@
 				"eamodio.gitlens"
 			],
 			"settings": {
-				"python.defaultInterpreterPath": "/usr/local/bin/python",
-				"black-formatter.path": [
-					"/usr/local/py-utils/bin/black"
-				]
+				"python.defaultInterpreterPath": "${containerWorkspaceFolder}/.venv/bin/python",
+				"[python]": {
+					"editor.defaultFormatter": "charliermarsh.ruff"
+				}
 			}
 		}
 	},
-	"onCreateCommand": "pre-commit install-hooks",
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
 
-	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "python3 -m pip install -e .[dev]"
+	// Install the package and the "dev" dependency group into .venv, then the git hooks.
+	"postCreateCommand": "uv sync && uv run pre-commit install --install-hooks"
 
 }

@@ -1,0 +1,9 @@
+// Cloudflare Workers configuration for the documentation site (static assets only).
+// The workflow .github/workflows/cloudflare.yml uses this file.
+{
+	"name": "python-package-template-docs",
+	"compatibility_date": "2026-11-26",
+	"assets": {
+		"directory": "./build/html"
+	}
+}

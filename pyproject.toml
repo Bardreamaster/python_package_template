@@ -3,27 +3,34 @@ name = "python-package-template"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
 authors = [
     { name = "changshan", email = "changshanshi@outlook.com" }
 ]
 requires-python = ">=3.12"
 dependencies = []
 
+[project.urls]
+Homepage = "https://github.com/Bardreamaster/python_package_template"
+Documentation = "https://bardreamaster.github.io/python_package_template/"
+Repository = "https://github.com/Bardreamaster/python_package_template"
+
 [build-system]
-requires = ["hatchling"]
+requires = ["hatchling>=1.27"]
 build-backend = "hatchling.build"
 
 [tool.ruff.lint]
-select = ["I"]
+select = ["E", "F", "I", "UP", "B"]
 
 [tool.pytest.ini_options]
+testpaths = ["tests"]
 addopts = [
     "--import-mode=importlib",
 ]
 
 [dependency-groups]
 dev = [
-    "black>=25.1.0",
     "furo>=2024.8.6",
     "myst-parser>=4.0.1",
     "pre-commit>=4.2.0",

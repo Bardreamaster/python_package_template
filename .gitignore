@@ -70,8 +70,12 @@ instance/
 # Scrapy stuff:
 .scrapy
 
-# Sphinx documentation
-docs/_build/
+# Sphinx documentation: build output and generated API pages
+docs/build/
+docs/*/apidocs/
+
+# Internal documentation. Do not publish it.
+docs/internal/
 
 # PyBuilder
 .pybuilder/
@@ -174,3 +178,9 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+# IDE and system files
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
