@@ -1,0 +1,58 @@
+name: Template self-test
+
+# Checks that init_package.sh gives a working package on Linux and on macOS.
+# This workflow is for the template repository only. init_package.sh deletes it.
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+  workflow_dispatch:  # Allows manual triggering
+
+permissions:
+  contents: read
+
+jobs:
+  init-package:
+    if: github.event.repository.is_template
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+
+    - name: Install uv
+      uses: astral-sh/setup-uv@v10.4.0
+
+    - name: Initialize a sample package
+      run: >-
+        /bin/bash init_package.sh
+        --name sample-pkg
+        --author "Sample Author"
+        --email "author@example.com"
+        --repo example-org/sample-pkg
+
+    - name: Check that no template name remains
+      run: |
+        ! grep -rIn --exclude-dir=.git --exclude=init_package.sh \
+          -e python_package_template -e python-package-template .
+
+    - name: Install dependencies
+      run: uv sync
+
+    - name: Lint and check formatting
+      run: |
+        uv run ruff check
+        uv run ruff format --check
+
+    - name: Run tests
+      run: uv run pytest
+
+    - name: Build documentation
+      run: uv run python docs/build_docs.py --strict
+
+    - name: Build package
+      run: uv build

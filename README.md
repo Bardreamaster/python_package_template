@@ -50,6 +50,7 @@ The steps that publish or deploy do nothing until you complete the setup in this
 | `pypi.yml` | push to `main`, pull request, tag `v*.*.*` | Build the package. Publish it to PyPI when you push a version tag. | Create the [environment](https://docs.github.com/en/actions/how-tos/deploy/configure-and-manage-deployments/manage-environments) `pypi` and configure [Trusted Publishing](https://packaging.python.org/en/latest/guides/publishing-package-distribution-releases-using-github-actions-ci-cd-workflows/#configuring-trusted-publishing). |
 | `gh-pages.yml` | push to `main` | Deploy the documentation to GitHub Pages | Set the repository variable `DOCS_DEPLOY_TARGET` to `github-pages`. In **Settings > Pages**, set **Source** to **GitHub Actions**. |
 | `cloudflare.yml` | push to `main` | Deploy the documentation to Cloudflare | Set the repository variable `DOCS_DEPLOY_TARGET` to `cloudflare`. Add the secrets `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID`. Set the Worker name in `docs/wrangler.jsonc`. |
+| `template-selftest.yml` | push to `main`, pull request | Test `init_package.sh` in the template repository | None. `init_package.sh` deletes this workflow. |
 
 Use one of the two deployment workflows and delete the other.
 The publish job in `pypi.yml` does not run in a repository that is marked as a template.

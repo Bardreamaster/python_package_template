@@ -49,6 +49,7 @@ Workflow 都在 `.github/workflows` 下，触发条件已经打开。
 | `pypi.yml` | 推送到 `main`、pull request、`v*.*.*` tag | 构建软件包；推送版本 tag 时发布到 PyPI | 新建名为 `pypi` 的 [environment](https://docs.github.com/en/actions/how-tos/deploy/configure-and-manage-deployments/manage-environments)，并配置 [Trusted Publishing](https://packaging.python.org/en/latest/guides/publishing-package-distribution-releases-using-github-actions-ci-cd-workflows/#configuring-trusted-publishing)。 |
 | `gh-pages.yml` | 推送到 `main` | 把文档部署到 GitHub Pages | 把仓库变量 `DOCS_DEPLOY_TARGET` 设为 `github-pages`；在 **Settings > Pages** 里把 **Source** 设为 **GitHub Actions**。 |
 | `cloudflare.yml` | 推送到 `main` | 把文档部署到 Cloudflare | 把仓库变量 `DOCS_DEPLOY_TARGET` 设为 `cloudflare`；添加 secret `CLOUDFLARE_API_TOKEN` 和 `CLOUDFLARE_ACCOUNT_ID`；在 `docs/wrangler.jsonc` 里填好 Worker 的名字。 |
+| `template-selftest.yml` | 推送到 `main`、pull request | 在模板仓库里测试 `init_package.sh` | 不需要。`init_package.sh` 会删掉这个 workflow。 |
 
 两个部署 workflow 只用一个，另一个删掉。
 仓库被标记为模板（template）时，`pypi.yml` 里的发布 job 不会运行。

@@ -301,6 +301,9 @@ AI agent 请先读 [AGENTS.md](AGENTS.md)。
 [MIT](LICENSE)
 README_EOF
 
+# Remove the workflow that tests the template itself
+rm -f .github/workflows/template-selftest.yml
+
 echo "Package successfully initialized!"
 echo "Next steps:"
 echo "1. Delete init_package.sh"
