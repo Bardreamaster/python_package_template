@@ -2,7 +2,7 @@
 
 [English](README.md)
 
-一个 Python 包模板：`src` 布局，用 uv、ruff 和 pytest，自带中英文两套 Sphinx 文档、一个提供文档的 MCP 服务器，以及几个 GitHub Actions workflow。
+一个 Python 包模板：`src` 布局，用 uv、ruff 和 pytest，自带中英文两套 Sphinx 文档、写给 AI agent 的指南，以及几个 GitHub Actions workflow。
 
 ## 快速开始
 
@@ -67,8 +67,6 @@ python_package_template/
 │   └── build_docs.py       # 构建站点、llms.txt 和 llms-full.txt
 ├── src/
 │   └── python_package_template/  # 包的源码
-│       ├── docs_index.py   # 列出、读取、搜索文档
-│       └── mcp_server.py   # 提供文档的 MCP 服务器
 ├── tests/                  # 测试
 ├── .gitattributes          # 行尾和二进制文件
 ├── .gitignore              # 常见的 Python 忽略规则

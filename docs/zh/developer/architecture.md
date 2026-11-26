@@ -10,8 +10,6 @@
 | 路径 | 内容 |
 | --- | --- |
 | `src/python_package_template/` | 包的源码。 |
-| `src/python_package_template/docs_index.py` | 列出、读取、搜索文档页面的函数。 |
-| `src/python_package_template/mcp_server.py` | 提供文档的 MCP 服务器。 |
 | `tests/` | 测试。 |
 | `docs/en/`、`docs/zh/` | 英文文档和中文文档。 |
 | `docs/conf.py`、`docs/build_docs.py` | Sphinx 配置和构建脚本。 |

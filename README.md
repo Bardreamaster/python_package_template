@@ -3,7 +3,7 @@
 [简体中文](README.zh-CN.md)
 
 A template for a Python package with a `src` layout. It uses uv, ruff and pytest.
-It includes Sphinx documentation in English and Chinese, an MCP server for the documentation, and GitHub Actions workflows.
+It includes Sphinx documentation in English and Chinese, guides for AI agents, and GitHub Actions workflows.
 
 ## Quick Start
 
@@ -68,8 +68,6 @@ python_package_template/
 │   └── build_docs.py       # Builds the site, llms.txt and llms-full.txt
 ├── src/
 │   └── python_package_template/  # Source code for the package
-│       ├── docs_index.py   # Lists, reads and searches the documentation
-│       └── mcp_server.py   # MCP server for the documentation
 ├── tests/                  # Test files
 ├── .gitattributes          # Line endings and binary files
 ├── .gitignore              # Git ignore file with common python patterns

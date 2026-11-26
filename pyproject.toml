@@ -11,13 +11,6 @@ authors = [
 requires-python = ">=3.12"
 dependencies = []
 
-[project.optional-dependencies]
-# Dependencies of the documentation MCP server (python-package-template-mcp).
-mcp = ["mcp>=2,<3"]
-
-[project.scripts]
-python-package-template-mcp = "python_package_template.mcp_server:main"
-
 [project.urls]
 Homepage = "https://github.com/Bardreamaster/python_package_template"
 Documentation = "https://bardreamaster.github.io/python_package_template/"
@@ -26,16 +19,6 @@ Repository = "https://github.com/Bardreamaster/python_package_template"
 [build-system]
 requires = ["hatchling>=1.27"]
 build-backend = "hatchling.build"
-
-# Ship the Markdown documentation inside the wheel as python_package_template/_docs.
-# The MCP server reads it. Files that .gitignore lists are not included.
-[tool.hatch.build.targets.wheel]
-only-include = ["src", "docs/en", "docs/zh"]
-dev-mode-dirs = ["src"]
-
-[tool.hatch.build.targets.wheel.sources]
-"src" = ""
-"docs" = "python_package_template/_docs"
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B"]
@@ -49,7 +32,6 @@ addopts = [
 [dependency-groups]
 dev = [
     "furo>=2024.8.6",
-    "mcp>=2,<3",
     "myst-parser>=4.0.1",
     "pre-commit>=4.2.0",
     "pytest>=8.4.1",

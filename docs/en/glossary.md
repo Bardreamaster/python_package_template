@@ -8,7 +8,6 @@ Add each new term to this table in both languages.
 | user guide | 使用指南 | The part of the documentation for people who use the package. |
 | developer guide | 开发指南 | The part of the documentation for people who change the package. |
 | agent guide | Agent 指南 | The part of the documentation for AI agents. |
-| MCP server | MCP 服务器 | A program that gives an agent access to the documentation through the Model Context Protocol. |
 
 :::{admonition} Template placeholder
 Add the terms of your project.

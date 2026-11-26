@@ -13,7 +13,6 @@ python3 -m pip install python-package-template
 ## 入口
 
 - Python 模块：`import python_package_template`
-- 文档服务器：`python-package-template-mcp`，见 [MCP 服务器与 llms.txt](mcp.md)。
 
 :::{admonition} 模板占位
 列出这个包的命令和主要函数。

@@ -13,7 +13,6 @@ The package needs Python 3.12 or later.
 ## Entry points
 
 - Python module: `import python_package_template`
-- Documentation server: `python-package-template-mcp`. See [MCP server and llms.txt](mcp.md).
 
 :::{admonition} Template placeholder
 List the commands and the main functions of your package.
