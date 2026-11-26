@@ -1,40 +1,64 @@
 name: Tests
 
 on:
-  # push:
-  #   branches: [ main ]
-  # pull_request:
-  #   branches: [ main ]
+  push:
+    branches: [ main ]
+  pull_request:
   workflow_dispatch:  # Allows manual triggering
 
+permissions:
+  contents: read
+
+concurrency:
+  group: tests-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+
+    - name: Install uv
+      uses: astral-sh/setup-uv@v10.4.0
+
+    - name: Install dependencies
+      run: uv sync
+
+    - name: Lint
+      run: uv run ruff check
+
+    - name: Check formatting
+      run: uv run ruff format --check
+
   test:
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, macos-latest]
-        python-version: ["3.10", "3.11", "3.12", "3.13"]
+        # The first version must be the same as requires-python in pyproject.toml.
+        python-version: ["3.12", "3.13", "3.14", "3.15"]
+    env:
+      # Codecov is optional. Without this secret, the upload steps do not run.
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v4
+      uses: actions/checkout@v7
 
-    - name: Install uv
-      uses: astral-sh/setup-uv@v5
-
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v5
+    - name: Install uv and Python ${{ matrix.python-version }}
+      uses: astral-sh/setup-uv@v10.4.0
       with:
         python-version: ${{ matrix.python-version }}
 
     - name: Install dependencies
-      run: |
-        uv sync --dev
+      run: uv sync
 
     - name: Run tests with coverage
       run: |
-        uv run pytest test/ \
+        uv run pytest \
           --cov=src/ \
           --cov-branch \
           --cov-report=xml \
@@ -42,22 +66,40 @@ jobs:
           -o junit_family=legacy
 
     - name: Upload coverage reports to Codecov
-      uses: codecov/codecov-action@v5
+      if: ${{ !cancelled() && env.CODECOV_TOKEN != '' }}
+      uses: codecov/codecov-action@v7
       with:
-        token: ${{ secrets.CODECOV_TOKEN }}
+        token: ${{ env.CODECOV_TOKEN }}
+        files: coverage.xml
+
+    - name: Upload test results to Codecov
+      if: ${{ !cancelled() && env.CODECOV_TOKEN != '' }}
+      uses: codecov/codecov-action@v7
+      with:
+        token: ${{ env.CODECOV_TOKEN }}
+        files: junit.xml
+        report_type: test_results
 
     - name: Upload test results
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       if: always()
       with:
         name: test-results-${{ matrix.os }}-py${{ matrix.python-version }}
         path: |
-          pytest-results.xml
-          htmlcov/
+          junit.xml
           coverage.xml
 
-    - name: Upload test results to Codecov
-      if: ${{ !cancelled() }}
-      uses: codecov/test-results-action@v1
-      with:
-          token: ${{ secrets.CODECOV_TOKEN }}
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+
+    - name: Install uv
+      uses: astral-sh/setup-uv@v10.4.0
+
+    - name: Install dependencies
+      run: uv sync
+
+    - name: Build documentation
+      run: uv run python docs/build_docs.py --strict

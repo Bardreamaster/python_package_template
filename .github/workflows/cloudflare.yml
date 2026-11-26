@@ -1,0 +1,51 @@
+name: Deploy Documentation to Cloudflare
+
+# This workflow runs only when the repository variable DOCS_DEPLOY_TARGET is "cloudflare".
+# It deploys docs/build/html as a Cloudflare Worker with static assets. See docs/wrangler.jsonc.
+#
+# Repository secrets:   CLOUDFLARE_API_TOKEN, CLOUDFLARE_ACCOUNT_ID
+# Repository variables: DOCS_BASE_URL (address of the site, used for the links in llms.txt)
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'docs/**'
+      - 'src/**'
+      - 'pyproject.toml'
+      - '.github/workflows/cloudflare.yml'
+  workflow_dispatch:  # Allows manual triggering
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cloudflare-docs
+  cancel-in-progress: false
+
+jobs:
+  deploy-docs:
+    if: vars.DOCS_DEPLOY_TARGET == 'cloudflare'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v10.4.0
+
+      - name: Install dependencies
+        run: uv sync
+
+      - name: Build documentation
+        run: uv run python docs/build_docs.py
+        env:
+          DOCS_BASE_URL: ${{ vars.DOCS_BASE_URL }}
+
+      - name: Deploy to Cloudflare
+        uses: cloudflare/wrangler-action@v4
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          workingDirectory: docs
+          command: deploy
