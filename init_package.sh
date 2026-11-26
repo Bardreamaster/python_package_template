@@ -242,7 +242,7 @@ echo "Updating README.md and README.zh-CN.md..."
 cat > README.md << README_EOF
 # $PACKAGE_NAME
 
-[简体中文](README.zh-CN.md)
+[中文](README.zh-CN.md)
 
 $DESCRIPTION
 
