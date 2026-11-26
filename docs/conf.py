@@ -86,7 +86,7 @@ if site_base_url:
 # The language link in the sidebar. See _templates/sidebar/language.html.
 html_context = {
     "other_language": "en" if docs_language == "zh" else "zh",
-    "other_language_name": "English" if docs_language == "zh" else "简体中文",
+    "other_language_name": "English" if docs_language == "zh" else "中文",
 }
 html_sidebars = {
     "**": [

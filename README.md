@@ -1,6 +1,6 @@
 # Python Package Template
 
-[简体中文](README.zh-CN.md)
+[中文](README.zh-CN.md)
 
 A template for a Python package with a `src` layout. It uses uv, ruff and pytest.
 It includes Sphinx documentation in English and Chinese, guides for AI agents, and GitHub Actions workflows.
